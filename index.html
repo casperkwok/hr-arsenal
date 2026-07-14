@@ -81,14 +81,19 @@ body{background:var(--bg);color:var(--ink);
 .sec-h{text-align:center;margin-bottom:6px;}
 .sec-h .t{font-size:27px;font-weight:900;}
 .sec-h .s{color:var(--muted);font-size:14px;margin-top:6px;}
-.install{max-width:720px;margin:20px auto 0;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(42,39,35,.05);}
-.install pre{margin:0;padding:20px 22px;background:#26221C;color:#EFE7D4;font-family:"SF Mono","Courier New",monospace;font-size:13px;line-height:1.85;overflow-x:auto;}
-.install pre .c{color:#8C8478;} .install pre .g{color:#D2A748;}
-.install .note{padding:15px 22px;font-size:13.5px;color:var(--ink2);}
-.install .note b{color:var(--ink);}
-.runtimes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px;}
-.rt{font-size:12.5px;font-weight:700;color:var(--ink2);background:#fff;border:1px solid var(--line);padding:6px 13px;border-radius:20px;}
-.rt .k{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--bronze);margin-right:6px;vertical-align:1px;}
+.rt-grid{display:grid;grid-template-columns:1.12fr 1fr 1fr;gap:14px;max-width:980px;margin:26px auto 0;}
+.rtcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 18px;position:relative;display:flex;flex-direction:column;}
+.rtcard.feat{border-color:var(--bronze);box-shadow:0 10px 30px rgba(166,130,60,.16);}
+.rtcard .rec{position:absolute;top:-11px;left:18px;background:var(--bronze);color:#fff;font-size:11px;font-weight:800;padding:3px 11px;border-radius:10px;letter-spacing:.02em;}
+.rtcard .rn{font-size:18px;font-weight:800;}
+.rtcard .rd{font-size:12.5px;color:var(--muted);margin:5px 0 13px;line-height:1.5;min-height:34px;}
+.rtcard pre{margin:0;padding:13px 14px;background:#26221C;color:#EFE7D4;border-radius:11px;
+  font-family:"SF Mono","Courier New",monospace;font-size:11.5px;line-height:1.75;overflow-x:auto;white-space:pre-wrap;word-break:break-all;}
+.rtcard pre .c{color:#8C8478;} .rtcard pre .g{color:#D2A748;}
+.rtcard .use{font-size:12.5px;color:var(--ink2);margin-top:12px;}
+.rtcard .use code{background:#F1ECE1;padding:1px 6px;border-radius:5px;font-size:12px;}
+.inote{text-align:center;font-size:13px;color:var(--muted);margin-top:18px;}
+.inote b{color:var(--ink2);}
 .principles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:920px;margin:20px auto 0;}
 .pr{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px 16px;text-align:center;}
 .pr .e{font-size:24px;}
@@ -167,20 +172,34 @@ body{background:var(--bg);color:var(--ink);
     </div>
   </section>
   <section class="sec" id="install">
-    <div class="sec-h"><div class="t round">领兵器 · 怎么装</div><div class="s">只需 python3（自带）· 引擎首次自动装 · 零配置</div></div>
-    <div class="install">
-<pre><span class="c"># 用 ClawHub 一键装（推荐）</span>
-<span class="g">clawhub</span> install resume-parsing
-<span class="g">clawhub</span> install candidate-assessment
-
-<span class="c"># 或从 GitHub 克隆到你的技能目录</span>
-<span class="g">git</span> clone https://github.com/casperkwok/resume-parsing-skill ~/.claude/skills/resume-parsing</pre>
-      <div class="note">装好后，在 AI 助手里直接说「<b>解析这份简历</b>」「<b>用这份 JD 评估这个候选人</b>」就行，不用记命令。</div>
+    <div class="sec-h"><div class="t round">领兵器 · 怎么装</div><div class="s">按你的 AI 助手选一种 · 只需 python3（自带），引擎首次自动装</div></div>
+    <div class="rt-grid">
+      <div class="rtcard feat">
+        <span class="rec">★ 最推荐</span>
+        <div class="rn">WorkBuddy</div>
+        <div class="rd">一键装、<code>/技能名</code> 直接触发，还能可视化管理，开箱即用</div>
+<pre><span class="c"># SkillHub 搜「简历解析」点一下装</span>
+<span class="c"># 或命令行：</span>
+<span class="g">npx</span> skills add casperkwok/resume-parsing-skill</pre>
+        <div class="use">用：输入框打 <code>/resume-parsing</code>，或直接说「解析这份简历」</div>
+      </div>
+      <div class="rtcard">
+        <div class="rn">Claude Code</div>
+        <div class="rd">装进 <code>~/.claude/skills/</code>，用自然语言调用</div>
+<pre><span class="g">clawhub</span> install resume-parsing
+<span class="c"># 或 git clone 到技能目录</span>
+<span class="g">git</span> clone …/resume-parsing-skill ~/.claude/skills/resume-parsing</pre>
+        <div class="use">用：直接对它说「解析这份简历」</div>
+      </div>
+      <div class="rtcard">
+        <div class="rn">Codex</div>
+        <div class="rd">克隆仓库后读 <code>AGENTS.md</code> 自动识别</div>
+<pre><span class="g">git</span> clone https://github.com/casperkwok/resume-parsing-skill
+<span class="c"># 让 Codex 读仓库里的 AGENTS.md</span></pre>
+        <div class="use">用：自然语言「解析这份简历」</div>
+      </div>
     </div>
-    <div class="runtimes">
-      <span class="rt"><span class="k"></span>Claude Code</span><span class="rt"><span class="k"></span>Codex</span>
-      <span class="rt"><span class="k"></span>OpenClaw</span><span class="rt"><span class="k"></span>WorkBuddy</span>
-    </div>
+    <div class="inote">三个工具装法相同，把 <b>slug</b> 换成 <code>candidate-assessment</code> / <code>boss-recruit</code> 即可 · 也兼容 OpenClaw</div>
   </section>
 
   <section class="sec" id="about">
